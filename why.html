@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why MapOps — Spatial RevOps</title>
+  <meta name="description" content="Why MapOps: maps bring spatial clarity to sales operations — find whitespace, align reps, and accelerate pipeline." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f13; --card:#111820; --ink:#f3f8ff; --muted:#c2d0e0;
+      --brand:#5eead4; --brand2:#2ae5c2; --brand-accent:#30ffd1;
+      --brand-ink:#042b26; --ring:rgba(94,234,212,.55); --line:rgba(255,255,255,.12);
+      --radius:16px; --shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1400px 900px at 80% -200px, rgba(42,229,194,.18), transparent 60%),
+        radial-gradient(800px 600px at 10% 100%, rgba(94,234,212,.15), transparent 70%),
+        linear-gradient(180deg,#0a0d11 0%,#0b0f13 100%);
+      color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(1120px, 92vw);margin-inline:auto}
+    .grid{display:grid;gap:24px}
+
+    header{position:sticky;top:0;background:rgba(10,13,17,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:40}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px;color:var(--brand)}
+    .nav-links{display:flex;gap:18px}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--brand2),var(--brand));color:var(--brand-ink);padding:10px 16px;border-radius:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);box-shadow:0 6px 18px rgba(42,229,194,.3);transition:transform .2s ease,background .3s ease}
+    .btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,var(--brand-accent),var(--brand))}
+    .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--brand2)}
+    .btn.ghost:hover{color:var(--brand2);border-color:var(--brand)}
+
+    .section{padding:60px 0;position:relative}
+    .section::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.08;background:radial-gradient(circle at 80% 10%,var(--brand2),transparent 70%)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .3s ease,border-color .3s ease}
+    .card:hover{transform:translateY(-4px);border-color:var(--brand-accent)}
+    .muted{color:#d2deea}
+    .cards{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .title{font-size:42px;line-height:1.15;margin:0 0 10px;background:linear-gradient(90deg,var(--brand-accent),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .subtitle{font-size:20px;color:#eaf6ff;opacity:.9;margin:0 0 6px}
+    h2.section-heading{color:var(--brand);text-shadow:0 0 8px rgba(94,234,212,.3)}
+
+    .small{font-size:13px;color:#a7bbd1}
+  </style>
+</head>
+<body>
+  <!-- floating back to home -->
+  <a class="btn" href="index.html" style="position:fixed;top:14px;left:14px;z-index:50" aria-label="Back to Home">← Back to Home</a>
+
+  <header>
+    <div class="container">
+      <nav aria-label="Secondary navigation">
+        <div class="logo">MapOps</div>
+        <div class="nav-links">
+          <a href="index.html#demo-maps" class="muted">Demo Maps</a>
+          <a href="why.html" class="muted" aria-current="page">Why MapOps</a>
+          <a href="index.html#pricing" class="muted">Pricing</a>
+          <a href="index.html#contact" class="btn">Get a Map Demo</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top:40px">
+      <div class="container">
+        <h1 class="title">Why MapOps</h1>
+        <p class="subtitle">Think of MapOps as RevOps — but spatial. We layer geography onto your customer data so you can see where to win next.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid cards">
+        <article class="card"><h3>Clarity</h3><p class="muted">Replace gut feels with spatial evidence. See opportunity density, coverage gaps, and overlap in minutes.</p></article>
+        <article class="card"><h3>Speed</h3><p class="muted">Turn stagnant dashboards into route-ready plans your team can act on this week.</p></article>
+        <article class="card"><h3>Focus</h3><p class="muted">Aim reps at the most promising pockets, not the biggest ZIP codes.</p></article>
+        <article class="card"><h3>Scale</h3><p class="muted">Templates make it repeatable across regions, teams, and quarters.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-heading" style="margin:0 0 8px;font-size:26px">Who is MapOps for?</h2>
+        <div class="grid cards">
+          <article class="card"><h3>Sales Leadership</h3><p class="muted">Re-cut territories, guide field plans, and run faster QBRs with spatial proof.</p></article>
+          <article class="card"><h3>RevOps / Sales Ops</h3><p class="muted">Blend CRM data with demographics, incentives, and competitor layers to find whitespace.</p></article>
+          <article class="card"><h3>Field &amp; Channel Teams</h3><p class="muted">Create route-ready days with 30/45/60-min rings; reduce windshield time.</p></article>
+          <article class="card"><h3>Marketing</h3><p class="muted">Aim OOH and ABM at true foot-traffic and account clusters that convert.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-heading" style="margin:0 0 8px;font-size:26px">What you can do with MapOps</h2>
+        <ul class="muted" style="display:grid;gap:10px;padding-left:18px">
+          <li><strong>Whitespace finder:</strong> Highlight high-density target pockets your reps aren’t touching yet.</li>
+          <li><strong>Drive-time routing:</strong> Auto-cluster leads into day-routes so field reps can stack meetings efficiently.</li>
+          <li><strong>Territory re-cut:</strong> Rebalance books using opportunity density + existing pipeline.</li>
+          <li><strong>Event radius blitz:</strong> Pull a contact heat map around a venue, pre-book meetings, and send geo-personalized outreach.</li>
+          <li><strong>Competitor overlap:</strong> Identify strongholds and uncover head-to-head opportunities.</li>
+          <li><strong>Expansion scoring:</strong> Rank metros by growth signals before committing resources.</li>
+        </ul>
+        <div style="margin-top:16px">
+          <a href="index.html#demo-maps" class="btn">See Demo Maps</a>
+          <a href="index.html#pricing" class="btn ghost">See Pricing</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div>© <span id="year"></span> MapOps. All rights reserved.</div>
+      <div class="muted">Privacy friendly. No cookies. No trackers.</div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
