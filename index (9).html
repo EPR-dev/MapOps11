@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MapOps — Territory Intelligence for Modern RevOps</title>
+  <meta name="description" content="MapOps connects the dots between revenue operations and geography. Visualize your markets, balance coverage, and build smarter go‑to‑market strategies with spatial data." />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="MapOps — Territory Intelligence for Modern RevOps" />
+  <meta property="og:description" content="See your market on a map. Spot whitespace. Move faster." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://docs.fused.io/assets/images/antonius_app-94f1c8b61b32d1d4eb9e2507b822cc06.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f13; --card:#111820; --ink:#f3f8ff; --muted:#c2d0e0;
+      --brand:#5eead4; --brand2:#2ae5c2; --brand-accent:#30ffd1;
+      --brand-ink:#042b26; --ring:rgba(94,234,212,.55); --line:rgba(255,255,255,.12);
+      --radius:16px; --shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1400px 900px at 80% -200px, rgba(42,229,194,.18), transparent 60%),
+        radial-gradient(800px 600px at 10% 100%, rgba(94,234,212,.15), transparent 70%),
+        linear-gradient(180deg,#0a0d11 0%,#0b0f13 100%);
+      color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(1180px, 92vw);margin-inline:auto}
+    .grid{display:grid;gap:24px}
+
+    header{position:sticky;top:0;background:rgba(10,13,17,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:40}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px;color:var(--brand)}
+    .logo-dot{width:12px;height:12px;border-radius:50%;background:var(--brand2);box-shadow:0 0 0 6px rgba(42,229,194,.2)}
+    .nav-links{display:flex;gap:18px}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--brand2),var(--brand));color:var(--brand-ink);padding:10px 16px;border-radius:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);box-shadow:0 6px 18px rgba(42,229,194,.3);transition:transform .2s ease,background .3s ease}
+    .btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,var(--brand-accent),var(--brand))}
+    .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--brand2)}
+    .btn.ghost:hover{color:var(--brand2);border-color:var(--brand)}
+
+    .hero{padding:80px 0 40px;background:radial-gradient(1200px 800px at 85% -50px,rgba(42,229,194,.18),transparent 70%)}
+    .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center}
+    .title{font-size:clamp(36px, 5.2vw, 58px);line-height:1.1;margin:0 0 14px;background:linear-gradient(90deg,var(--brand-accent),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 10px rgba(94,234,212,.3)}
+    .subtitle{font-size:clamp(18px, 2.3vw, 22px);color:var(--ink);opacity:0.9;margin:0 0 22px}
+
+    .section{padding:60px 0;position:relative}
+    .section::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.08;background:radial-gradient(circle at 80% 10%,var(--brand2),transparent 70%)}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .3s ease,border-color .3s ease}
+    .card:hover{transform:translateY(-4px);border-color:var(--brand-accent)}
+    .muted{color:#d2deea}
+    .cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    h2.section-heading{color:var(--brand);text-shadow:0 0 8px rgba(94,234,212,.3)}
+
+    .input{width:100%; margin-top:6px;background:#0f151c; color:var(--ink);border:1px solid var(--line);
+      border-radius:12px; padding:12px 14px; outline:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.03); transition:border-color .2s ease, box-shadow .2s ease;}
+    .input:focus{border-color:var(--brand2); box-shadow:0 0 0 4px rgba(94,234,212,.15);}
+    label{display:block; font-weight:500; color:#e6f4ff;}
+
+    .hero-visual{border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow)}
+    .hero-visual img{display:block; width:100%; height:100%; object-fit:cover;}
+
+    .demo-thumb{position:relative;width:100%;height:180px;border-radius:12px;background:#0e171f;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#a9bdd5;overflow:hidden}
+    .demo-thumb-img{display:block;width:100%;height:180px;object-fit:cover;border-radius:12px}
+    .demo-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    dialog{background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);max-width:640px;width:92vw;padding:18px}
+    dialog::backdrop{background:rgba(0,0,0,.45)}
+
+    .footer{border-top:1px solid var(--line);padding:40px 0 60px}
+    .footer-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    .small{font-size:13px;color:#a7bbd1}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="Primary navigation">
+        <div class="logo"><span class="logo-dot" aria-hidden="true"></span>MapOps</div>
+        <div class="nav-links">
+          <a href="#spatial-revops" class="muted">Sales Enablement</a>
+          <a href="#live-map" class="muted">Live Map</a>
+          <a href="#demo-maps" class="muted">Demo Maps</a>
+          <a href="why.html" class="muted">Why MapOps</a>
+          <a href="#pricing" class="muted">Pricing</a>
+          <a href="#contact" class="btn">Start Map Demo</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container wrap">
+        <div>
+          <h1 class="title">Territory Intelligence for Modern RevOps</h1>
+          <p class="subtitle">MapOps connects the dots between revenue operations and geography. Because pipeline isn’t abstract — it’s <em>somewhere</em>. Visualize your markets, balance coverage, and build smarter go‑to‑market strategies with spatial data.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="#contact" class="btn">See Your Market on a Map</a>
+            <a href="why.html" class="btn ghost">Why Spatial RevOps</a>
+          </div>
+          <p class="muted" style="margin-top:12px">Privacy‑forward. No trackers. Built on fused.io.</p>
+        </div>
+        <!-- HERO visual (static screenshot) -->
+        <figure class="hero-visual">
+          <img
+            src="https://docs.fused.io/assets/images/antonius_app-94f1c8b61b32d1d4eb9e2507b822cc06.png"
+            alt="MapOps sample map screenshot" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- Sales Enablement Meets Spatial Strategy -->
+    <section id="spatial-revops" class="section">
+      <div class="container">
+        <h2 class="section-heading" style="margin:0 0 8px;font-size:26px">Sales Enablement Meets Spatial Strategy</h2>
+        <p class="muted" style="margin:0 0 18px">Traditional CRMs tell you what’s happening in your funnel — but not where. MapOps adds a geographic layer to revenue operations so teams can operate with clarity and speed.</p>
+        <div class="grid cards">
+          <article class="card"><h3>Spot whitespace faster</h3><p class="muted">Find high‑fit pockets before competitors do.</p></article>
+          <article class="card"><h3>Align territories with data</h3><p class="muted">Balance coverage around real opportunity density.</p></article>
+          <article class="card"><h3>See pipeline by place</h3><p class="muted">Visualize health by region, route, or rep.</p></article>
+          <article class="card"><h3>Eliminate hidden inefficiencies</h3><p class="muted">Reveal overlap, dead zones, and wasted travel.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Map (auto‑shown iframe) -->
+    <section id="live-map" class="section">
+      <div class="container">
+        <h2 class="section-heading" style="margin:0 0 8px;font-size:26px">Live Map</h2>
+        <p class="muted" style="margin:0 0 18px">Open the embedded map to explore layers, toggles, and territory examples.</p>
+        <div class="card" style="text-align:center">
+          <iframe title="MapOps Live Example" src="https://udf.ai/fsh_JC706aFq6u6KyaVVgC5Nz/run?dtype_out_raster=png&dtype_out_vector=html" style="width:100%;height:520px;border:0;border-radius:12px"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Maps (grid with thumbnails + breakdown modals) -->
+    <section id="demo-maps" class="section">
+      <div class="container">
+        <h2 style="margin:0 0 8px;font-size:26px;color:#5eead4">Demo Maps</h2>
+        <p class="muted" style="margin:0 0 18px">Explore sample territory visualizations built with MapOps.</p>
+
+        <div class="grid cards">
+          <!-- Demo cards are generated manually (no JS dependency) -->
+          <!-- 1 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_JC706aFq6u6KyaVVgC5Nz/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Emerging Markets — USA" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_JC706aFq6u6KyaVVgC5Nz/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Emerging Markets — USA</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_JC706aFq6u6KyaVVgC5Nz/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m1').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m1"><h3>Emerging Markets — USA</h3><p class="muted">Rank metros by signals (incentives, income growth, builder density) to spot early GTM advantage.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 2 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_33DaOco4wdToJbv5U3uYGN/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Complex Movement Data — San Diego" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_33DaOco4wdToJbv5U3uYGN/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Complex Movement Data — San Diego</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_33DaOco4wdToJbv5U3uYGN/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m2').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m2"><h3>Complex Movement Data — San Diego</h3><p class="muted">Fuse pedestrian/bike counts to target storefronts, OOH, and field engagement by true foot traffic.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 3 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_4va13cTzf73LqTsXvGnaVT/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Customer Cluster — San Francisco" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_4va13cTzf73LqTsXvGnaVT/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Customer Cluster — San Francisco</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_4va13cTzf73LqTsXvGnaVT/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m3').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m3"><h3>Customer Cluster — San Francisco</h3><p class="muted">Cluster customers by proximity and attributes to enable hyper‑local plays, ride‑alongs, and micro‑campaigns.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 4 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_55aNIRxsULfr5H7er2nAMo/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Market Penetration — USA" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_55aNIRxsULfr5H7er2nAMo/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Market Penetration — USA</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_55aNIRxsULfr5H7er2nAMo/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m4').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m4"><h3>Market Penetration — USA</h3><p class="muted">Compare customer density to population to find under‑served zip codes and rebalance outreach.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 5 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_7dIHV0VhTaneMBTHmMkhR8/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Territory Optimization — Midwest" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_7dIHV0VhTaneMBTHmMkhR8/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Territory Optimization — Midwest</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_7dIHV0VhTaneMBTHmMkhR8/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m5').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m5"><h3>Territory Optimization — Midwest</h3><p class="muted">Balance workload and travel using opportunity density + drive‑time rings to cut overlap.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 6 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_4h1GX2fwVnVIn3YfsRV63f/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Site Selection — Salt Lake City" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_4h1GX2fwVnVIn3YfsRV63f/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Site Selection — Salt Lake City</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_4h1GX2fwVnVIn3YfsRV63f/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m6').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m6"><h3>Site Selection — Salt Lake City</h3><p class="muted">Score candidate sites against demographics, foot traffic, competitors, and access.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 7 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_6EOfpQlaJYfW2FIg3s2mup/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Competition Mapping — San Francisco" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_6EOfpQlaJYfW2FIg3s2mup/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Competition Mapping — San Francisco</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_6EOfpQlaJYfW2FIg3s2mup/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m7').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m7"><h3>Competition Mapping — San Francisco</h3><p class="muted">Visualize competitor presence vs. your accounts to find head‑to‑head plays and whitespace gaps.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 8 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_5kniZHnnkoFJrCa1RBOuux/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Revenue per Sq Mile — Kansas" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_5kniZHnnkoFJrCa1RBOuux/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Revenue per Sq Mile — Kansas</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_5kniZHnnkoFJrCa1RBOuux/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m8').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m8"><h3>Revenue per Sq Mile — Kansas</h3><p class="muted">Normalize revenue by area to surface outliers, low‑yield sprawl, and true winners.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 9 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_nDYQ3cemLyHMr2mygrqHm/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Sales Route Creation — Indiana/Ohio" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_nDYQ3cemLyHMr2mygrqHm/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Sales Route Creation — Indiana/Ohio</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_nDYQ3cemLyHMr2mygrqHm/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m9').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m9"><h3>Sales Route Creation — Indiana/Ohio</h3><p class="muted">Cluster stops and build efficient daily routes (30/45/60‑min rings) to stack more meetings.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+
+          <!-- 10 -->
+          <article class="card">
+            <div class="demo-thumb">
+              <a href="https://udf.ai/fsh_1ZSbE16qc1lQhsEGs2Acvv/run?dtype_out_raster=png&dtype_out_vector=html" target="_blank" rel="noopener">
+                <img class="demo-thumb-img" alt="Territory Expansion Mapping — San Diego" referrerpolicy="no-referrer" loading="lazy" src="https://udf.ai/fsh_1ZSbE16qc1lQhsEGs2Acvv/run?dtype_out_raster=png" />
+              </a>
+            </div>
+            <h3 style="margin:12px 0 6px">Territory Expansion Mapping — San Diego</h3>
+            <div class="demo-actions">
+              <a class="btn" target="_blank" rel="noopener" href="https://udf.ai/fsh_1ZSbE16qc1lQhsEGs2Acvv/run?dtype_out_raster=png&dtype_out_vector=html">Open Demo</a>
+              <button class="btn ghost" onclick="document.getElementById('m10').showModal()">Map Breakdown</button>
+            </div>
+          </article>
+          <dialog id="m10"><h3>Territory Expansion Mapping — San Diego</h3><p class="muted">Identify adjacent high‑fit pockets and a stepwise entry plan that compounds coverage.</p><div style="text-align:right"><button class="btn ghost" onclick="this.closest('dialog').close()">Close</button></div></dialog>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section">
+      <div class="container">
+        <h2 class="section-heading" style="margin:0 0 8px;font-size:26px">Pricing</h2>
+        <p class="muted" style="margin:0 0 18px">Simple, solo‑friendly pricing that scales with your team.</p>
+        <div class="grid cards">
+          <article class="card">
+            <h3>Quickstart Map Pack</h3>
+            <p><strong style="font-size:36px">$499</strong> <span class="muted">/ one‑time</span></p>
+            <ul class="muted">
+              <li>3 territory views (density, drive‑time, competitor)</li>
+              <li>Interactive HTML + 2 PNG exports</li>
+              <li>Answers to 5 key business questions</li>
+              <li>72‑hour delivery</li>
+            </ul>
+            <a class="btn">Pay &amp; Start</a>
+          </article>
+          <article class="card">
+            <h3>Monthly MapOps</h3>
+            <p><strong style="font-size:36px">$850</strong> <span class="muted">/ month</span></p>
+            <ul class="muted">
+              <li>Up to 3 new/updated maps per month</li>
+              <li>48‑hour turnaround</li>
+              <li>CSV‑based updates</li>
+              <li>Quarterly territory checkup</li>
+            </ul>
+            <a class="btn">Subscribe</a>
+          </article>
+          <article class="card">
+            <h3>Growth Plan</h3>
+            <p><strong style="font-size:36px">$1,750</strong> <span class="muted">/ month</span></p>
+            <ul class="muted">
+              <li>Up to 8 maps per month</li>
+              <li>Priority updates (24–48h)</li>
+              <li>Light data enrichment (public + firmographic)</li>
+              <li>Monthly strategy call &amp; playbook</li>
+            </ul>
+            <a class="btn">Subscribe</a>
+          </article>
+          <article class="card">
+            <h3>Enablement Workshop</h3>
+            <p><strong style="font-size:36px">$2,500</strong> <span class="muted">/ engagement</span></p>
+            <ul class="muted">
+              <li>Private leadership session (3–6 people)</li>
+              <li>Fused.io setup + onboarding</li>
+              <li>2–3 reusable templates for your territories</li>
+              <li>30‑day follow‑up with recorded SOPs</li>
+            </ul>
+            <a class="btn">Pay &amp; Schedule</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Footer -->
+    <section id="contact" class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3 style="margin:0 0 10px">Get a Map Demo</h3>
+            <p class="small">See your territories in action. We’ll respond the same day.</p>
+          </div>
+          <form class="card" onsubmit="return submitLead(event)">
+            <label>Full name<input required name="name" class="input" placeholder="Jordan Lee" autocomplete="name" /></label>
+            <label style="margin-top:10px">Work email<input required name="email" type="email" class="input" placeholder="jordan@company.com" autocomplete="email" /></label>
+            <label style="margin-top:10px">Company<input name="company" class="input" placeholder="Acme Logistics" autocomplete="organization" /></label>
+            <label style="margin-top:10px">What do you want to map?<textarea name="goal" class="input" rows="4" placeholder="Example: 1,200 prospects in SoCal, show clusters and drive‑day routes"></textarea></label>
+            <button class="btn" style="margin-top:12px" type="submit">Submit</button>
+            <p id="thanks" class="small" style="display:none;margin-top:8px">Thanks! We'll reach out shortly.</p>
+          </form>
+        </div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div>© <span id="year"></span> MapOps. All rights reserved.</div>
+          <div class="muted">Privacy friendly. No cookies. No trackers.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function submitLead(e){
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const subject = encodeURIComponent('MapOps demo request');
+      const body = encodeURIComponent(
+        `Name: ${data.get('name')}\nEmail: ${data.get('email')}`+
+        (data.get('company')?`\\nCompany: ${data.get('company')}`:'')+
+        (data.get('goal')?`\\nGoal: ${data.get('goal')}`:'')
+      );
+      window.location.href = `mailto:hello@mapops.dev?subject=${subject}&body=${body}`;
+      document.getElementById('thanks').style.display='block';
+      e.target.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>
